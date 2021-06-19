@@ -1,3 +1,7 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
@@ -57,6 +61,10 @@ repositories {
 dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
-    implementation 'net.openid:appauth:0.7.1'
     implementation 'androidx.browser:browser:1.2.0'
+    implementation 'androidx.browser:browser:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'com.blackberry.blackberrydynamics:android_handheld_platform:8.1.0.37'
+    implementation 'com.blackberry.blackberrydynamics:android_handheld_backup_support:8.1.0.37'
 }
