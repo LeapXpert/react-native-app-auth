@@ -142,6 +142,10 @@ export const register = ({
   return RNAppAuth.register(...nativeMethodArguments);
 };
 
+export const setSsoWebApp = (appId) => {
+  RNAppAuth.setSsoWebApp(appId)
+}
+
 export const authorize = ({
   issuer,
   redirectUrl,
