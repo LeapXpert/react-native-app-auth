@@ -23,6 +23,7 @@ buildscript {
 
 apply plugin: 'com.android.library'
 
+def _blackberryVersion = safeExtGet("blackberry_version", "8.1.0.37")
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', 28)
     buildToolsVersion safeExtGet('buildToolsVersion', '28.0.3')
@@ -65,6 +66,6 @@ dependencies {
     implementation 'androidx.browser:browser:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'com.blackberry.blackberrydynamics:android_handheld_platform:8.1.0.37'
-    implementation 'com.blackberry.blackberrydynamics:android_handheld_backup_support:8.1.0.37'
+    implementation 'com.blackberry.blackberrydynamics:android_handheld_platform:${_blackberryVersion}'
+    implementation 'com.blackberry.blackberrydynamics:android_handheld_backup_support:${_blackberryVersion}'
 }
