@@ -110,6 +110,8 @@ export function register(config: RegistrationConfiguration): Promise<Registratio
 
 export function authorize(config: AuthConfiguration): Promise<AuthorizeResult>;
 
+export function setSsoWebApp(webApp: string);
+
 export function refresh(
   config: AuthConfiguration,
   refreshConfig: RefreshConfiguration
