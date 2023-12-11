@@ -2,12 +2,12 @@ package com.rnappauth;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.content.ActivityNotFoundException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,19 +16,19 @@ import androidx.browser.customtabs.CustomTabsClient;
 import androidx.browser.customtabs.CustomTabsServiceConnection;
 
 import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.ReadableType;
-
+import com.facebook.react.bridge.WritableMap;
+import com.rnappauth.utils.CustomConnectionBuilder;
 import com.rnappauth.utils.MapUtil;
 import com.rnappauth.utils.RegistrationResponseFactory;
 import com.rnappauth.utils.TokenResponseFactory;
-import com.rnappauth.utils.CustomConnectionBuilder;
+import com.rnappauth.utils.UnsafeConnectionBuilder;
 
 
 import net.openid.appauth.AppAuthConfiguration;
@@ -43,8 +43,8 @@ import net.openid.appauth.ClientSecretPost;
 import net.openid.appauth.RegistrationRequest;
 import net.openid.appauth.RegistrationResponse;
 import net.openid.appauth.ResponseTypeValues;
-import net.openid.appauth.TokenResponse;
 import net.openid.appauth.TokenRequest;
+import net.openid.appauth.TokenResponse;
 import net.openid.appauth.browser.BrowserDescriptor;
 import net.openid.appauth.browser.BrowserMatcher;
 import net.openid.appauth.connectivity.ConnectionBuilder;
@@ -485,7 +485,7 @@ public class RNAppAuthModule extends ReactContextBaseJavaModule implements Activ
         if (tokenEndpointAuthMethod != null) {
             registrationRequestBuilder.setTokenEndpointAuthenticationMethod(tokenEndpointAuthMethod);
         }
-        
+
         RegistrationRequest registrationRequest = registrationRequestBuilder.build();
 
         AuthorizationService.RegistrationResponseCallback registrationResponseCallback = new AuthorizationService.RegistrationResponseCallback() {
@@ -573,10 +573,10 @@ public class RNAppAuthModule extends ReactContextBaseJavaModule implements Activ
 
                 authService.performAuthorizationRequest(authRequest, pendingIntent);
             }
-        } catch (Exception e) {
-            promise.reject("", "Please install Access app");
-            e.printStackTrace();
-
+        } catch (ActivityNotFoundException e) {
+            promise.reject("browser_not_found", e.getMessage());
+           } catch (Exception e) {
+            promise.reject("authentication_failed", e.getMessage());
         }
     }
 
