@@ -940,8 +940,7 @@ public class RNAppAuthModule extends ReactContextBaseJavaModule implements Activ
             Boolean skipIssuerHttpsCheck,
             ReadableArray androidAllowCustomBrowsers) {
         AppAuthConfiguration.Builder builder = new AppAuthConfiguration
-        .Builder()
-        setBrowserMatcher(getBrowserAllowList(androidAllowCustomBrowsers))
+        .Builder().setBrowserMatcher(getBrowserAllowList(androidAllowCustomBrowsers))
         .setConnectionBuilder(connectionBuilder)
         .setSkipIssuerHttpsCheck(skipIssuerHttpsCheck);
         if (this.ssoWebApp != null && !this.ssoWebApp.equalsIgnoreCase("*")) {
@@ -1136,4 +1135,14 @@ public class RNAppAuthModule extends ReactContextBaseJavaModule implements Activ
     public String getName() {
         return "RNAppAuth";
     }
+
+    /*
+     * Return error information if it is available
+     */
+    private String getErrorMessage(AuthorizationException ex) {
+        if (ex.errorDescription == null && ex.error != null)
+            return ex.error;
+        return ex.errorDescription;
+    }
+
 }
